@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const app = express();
 
 //database connection
@@ -17,13 +18,19 @@ mongoose
 
 //middlewares
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+app.use(express.json());
 
 app.get("/", function (req, res) {
   res.send("hello");
 });
+
+//routers
+const articlesRouter = require("./routes/articles");
+app.use("/articles", articlesRouter);
 //port
 const port = process.env.PORT || 5000;
-//connection
+//port connection
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`);
 });
