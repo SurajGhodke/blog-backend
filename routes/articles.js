@@ -23,4 +23,27 @@ router.post("/add", (req, res) => {
     .catch((err) => res.status(400).json(`Error: ${err}`));
 });
 
+//find article
+router.get("/:id", (req, res) => {
+  Articles.findById(req.params.id)
+    .then((article) => res.json(article))
+    .catch((err) => res.status(400).json(`Error: ${err}`));
+});
+
+//find article and update
+router.put("/update/:id", (req, res) => {
+  Articles.findById(req.params.id)
+    .then((article) => {
+      (article.title = req.body.title),
+        (article.article = req.body.article),
+        (article.author = req.body.author);
+
+      article
+        .save()
+        .then(() => res.json("the article is updated successfully!"))
+        .catch((err) => res.status(400).json(`Error: ${err}`));
+    })
+    .catch((err) => res.status(400).json(`Error: ${err}`));
+});
+
 module.exports = router;
