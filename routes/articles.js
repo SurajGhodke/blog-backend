@@ -5,6 +5,7 @@ const Articles = require("../models/article");
 //Get all articles
 router.get("/", (req, res) => {
   Articles.find()
+    .sort({ createdAt: "desc" })
     .then((article) => res.json(article))
     .catch((err) => res.status(400).json(`Error: ${err}`));
 });
